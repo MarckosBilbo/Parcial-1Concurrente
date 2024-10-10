@@ -1,6 +1,5 @@
 package org.example.parcial1concurrente.service;
 
-import org.example.parcial1concurrente.repos.MaquinaRepository;
 import org.example.parcial1concurrente.util.NotFoundException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
