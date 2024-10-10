@@ -1,4 +1,7 @@
 package org.example.parcial1concurrente.repos;
 
-public interface ComponenteRepository {
+import org.example.parcial1concurrente.domain.Componente;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ComponenteRepository extends JpaRepository<Componente, Long> {
 }
