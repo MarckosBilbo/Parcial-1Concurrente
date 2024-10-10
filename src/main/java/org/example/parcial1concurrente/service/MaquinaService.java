@@ -1,7 +1,5 @@
 package org.example.parcial1concurrente.service;
 
-import org.example.parcial1concurrente.model.BolaDTO;
-import org.example.parcial1concurrente.model.MaquinaDTO;
 import org.example.parcial1concurrente.repos.MaquinaRepository;
 import org.example.parcial1concurrente.util.NotFoundException;
 import org.springframework.data.domain.Sort;
