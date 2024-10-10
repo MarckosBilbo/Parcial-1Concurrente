@@ -1,7 +1,6 @@
 package org.example.parcial1concurrente.rest;
 
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import org.example.parcial1concurrente.model.BolaDTO;
 import org.example.parcial1concurrente.service.BolaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
