@@ -1,8 +1,5 @@
 package org.example.parcial1concurrente.service;
 
-import org.example.parcial1concurrente.domain.Bola;
-import org.example.parcial1concurrente.domain.EstacionDeProduccion;
-import org.example.parcial1concurrente.domain.Maquina;
 import org.example.parcial1concurrente.model.BolaDTO;
 import org.example.parcial1concurrente.repos.BolaRepository;
 import org.example.parcial1concurrente.repos.EstacionDeProduccionRepository;
@@ -10,7 +7,6 @@ import org.example.parcial1concurrente.repos.MaquinaRepository;
 import org.example.parcial1concurrente.util.NotFoundException;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
