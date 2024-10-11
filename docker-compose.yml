@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      MYSQL_ROOT_PASSWORD: T1vlne1vqMMmvap?
+      MYSQL_DATABASE: Parcial-1Concurrente
+      MYSQL_USER: localhost
+      MYSQL_PASSWORD: P4ssw0rd¿
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    image: openjdk:17
+    container_name: spring_app
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    working_dir: /app
+    command: ./mvnw spring-boot:run
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Parcial-1Concurrente
+      SPRING_DATASOURCE_USERNAME: localhost
+      SPRING_DATASOURCE_PASSWORD: P4ssw0rd¿
+      SPRING_JPA_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+
+volumes:
+  mysql-data:
