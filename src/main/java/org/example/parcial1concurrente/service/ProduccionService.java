@@ -5,12 +5,13 @@ import org.example.parcial1concurrente.domain.Bola;
 import org.example.parcial1concurrente.repos.ComponenteRepository;
 import org.example.parcial1concurrente.repos.BolaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -23,17 +24,16 @@ public class ProduccionService {
     private final BlockingQueue<Componente> bufferComponentes = new LinkedBlockingQueue<>();
     private final BlockingQueue<Bola> bufferBolas = new LinkedBlockingQueue<>();
 
-    // Constructor con inyección de dependencias
     @Autowired
     public ProduccionService(ComponenteRepository componenteRepository, BolaRepository bolaRepository) {
         this.componenteRepository = componenteRepository;
         this.bolaRepository = bolaRepository;
     }
 
-    // metodo asíncrono para producir componentes(para un "tablero" específico)
+    // Método asíncrono para producir componentes
     @Async
     public void producirComponentes() {
-        // Producción de 100 bolas
+        // Producir 100 bolas
         for (int i = 0; i < 100; i++) {
             Componente bola = new Componente();
             bola.setTipo("Bola");
@@ -43,7 +43,7 @@ public class ProduccionService {
             System.out.println("Bola " + i + " producida.");
         }
 
-        // Producción de 15 clavos
+        // Producir 15 clavos
         for (int i = 0; i < 15; i++) {
             Componente clavo = new Componente();
             clavo.setTipo("Clavo");
@@ -53,7 +53,7 @@ public class ProduccionService {
             System.out.println("Clavo " + i + " producido.");
         }
 
-        // Producción de 6 contenedores
+        // Producir 6 contenedores
         for (int i = 0; i < 6; i++) {
             Componente contenedor = new Componente();
             contenedor.setTipo("Contenedor");
@@ -64,20 +64,21 @@ public class ProduccionService {
         }
     }
 
-    // metodo asíncrono para ensamblar la máquina
+    // Método asíncrono para ensamblar la máquina
     @Async
     public void ensamblarMaquina() throws InterruptedException {
         while (true) {
+            // Tomar un componente del buffer y ensamblarlo
             Componente componente = bufferComponentes.take();
             System.out.println("Ensamblando " + componente.getNombre());
             // Lógica de ensamblaje
         }
     }
 
-    // metodo asíncrono para asignar valores de distribución a las bolas
+    // Método asíncrono para asignar valores de distribución a las bolas
     @Async
-    public void asignarValoresDistribucion(String filePath) throws IOException, InterruptedException {
-        List<Double> valoresDistribucion = leerValoresDistribucion(filePath);
+    public void asignarValoresDistribucion() throws IOException, InterruptedException {
+        List<Double> valoresDistribucion = leerValoresDistribucion();
         for (int i = 0; i < valoresDistribucion.size(); i++) {
             Bola bola = new Bola();
             bola.setColor("Color " + i);
@@ -88,10 +89,11 @@ public class ProduccionService {
         }
     }
 
-    // metodo para leer los valores de distribución desde un archivo (.CSV)
-    private List<Double> leerValoresDistribucion(String filePath) throws IOException {
+    // Método para leer los valores de distribución desde un archivo
+    private List<Double> leerValoresDistribucion() throws IOException {
         List<Double> valores = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        ClassPathResource resource = new ClassPathResource("Parcial-1Concurrente\\src\\main\\resources\\DatosDistribucionNormal.CSV");
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             String line;
             br.readLine(); // Saltar la primera línea (cabecera)
             while ((line = br.readLine()) != null) {
@@ -101,7 +103,7 @@ public class ProduccionService {
         return valores;
     }
 
-    // metodo para consumir una bola del buffer
+    // Método para consumir una bola del buffer
     public Bola consumirBola() throws InterruptedException {
         return bufferBolas.take();
     }
