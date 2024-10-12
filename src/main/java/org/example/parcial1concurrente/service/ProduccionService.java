@@ -30,7 +30,7 @@ public class ProduccionService {
         this.bolaRepository = bolaRepository;
     }
 
-    // Método asíncrono para producir componentes
+    // metodo asíncrono para producir componentes
     @Async
     public void producirComponentes() {
         // Producir 100 bolas
@@ -64,7 +64,7 @@ public class ProduccionService {
         }
     }
 
-    // Método asíncrono para ensamblar la máquina
+    // metodo asíncrono para ensamblar la máquina
     @Async
     public void ensamblarMaquina() throws InterruptedException {
         while (true) {
@@ -75,7 +75,7 @@ public class ProduccionService {
         }
     }
 
-    // Método asíncrono para asignar valores de distribución a las bolas
+    // metodo asíncrono para asignar valores de distribución a las bolas
     @Async
     public void asignarValoresDistribucion() throws IOException, InterruptedException {
         List<Double> valoresDistribucion = leerValoresDistribucion();
@@ -86,24 +86,26 @@ public class ProduccionService {
             bolaRepository.save(bola);
             bufferBolas.add(bola);
             System.out.println("Bola " + i + " con valor de distribución " + valoresDistribucion.get(i) + " asignado.");
+            System.out.println("Guardado en la base de datos: " + bola);
         }
     }
 
-    // Método para leer los valores de distribución desde un archivo
+    // metodo para leer los valores de distribución desde un archivo
     private List<Double> leerValoresDistribucion() throws IOException {
         List<Double> valores = new ArrayList<>();
-        ClassPathResource resource = new ClassPathResource("Parcial-1Concurrente\\src\\main\\resources\\DatosDistribucionNormal.CSV");
+        ClassPathResource resource = new ClassPathResource("DatosDistribucionNormal.CSV");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             String line;
             br.readLine(); // Saltar la primera línea (cabecera)
             while ((line = br.readLine()) != null) {
                 valores.add(Double.parseDouble(line));
+                System.out.println("Valor leído: " + line);
             }
         }
         return valores;
     }
 
-    // Método para consumir una bola del buffer
+    // metodo para consumir una bola del buffer
     public Bola consumirBola() throws InterruptedException {
         return bufferBolas.take();
     }
