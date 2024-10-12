@@ -86,18 +86,20 @@ public class ProduccionService {
             bolaRepository.save(bola);
             bufferBolas.add(bola);
             System.out.println("Bola " + i + " con valor de distribución " + valoresDistribucion.get(i) + " asignado.");
+            System.out.println("Guardado en la base de datos: " + bola);
         }
     }
 
     // metodo para leer los valores de distribución desde un archivo
     private List<Double> leerValoresDistribucion() throws IOException {
         List<Double> valores = new ArrayList<>();
-        ClassPathResource resource = new ClassPathResource("Parcial-1Concurrente\\src\\main\\resources\\DatosDistribucionNormal.CSV");
+        ClassPathResource resource = new ClassPathResource("DatosDistribucionNormal.CSV");
         try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             String line;
             br.readLine(); // Saltar la primera línea (cabecera)
             while ((line = br.readLine()) != null) {
                 valores.add(Double.parseDouble(line));
+                System.out.println("Valor leído: " + line);
             }
         }
         return valores;
