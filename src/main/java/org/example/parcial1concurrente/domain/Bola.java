@@ -4,26 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Entity
 @Table(name = "bolas")
-@Getter
-@Setter
+@Getter // Anotación de Lombok para generar los métodos 'getter'.
+@Setter // Anotación de Lombok para generar los métodos 'setter'.
 public class Bola {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(nullable = false)
-    private String color;  // Característica adicional (puede cambiarse a otro atributo si es necesario)
-
-    @ManyToOne
-    @JoinColumn(name = "estacion_id")
-    private EstacionDeProduccion estacionDeProduccion;  // Estación que produjo la bola
-
-    @ManyToOne
-    @JoinColumn(name = "maquina_id")
-    private Maquina maquina;  // Máquina donde se ensamblará la bola
-
-    // Posición en la máquina (opcional, si se necesita)
-    private Integer posicion;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id; // Campo que representa el ID de la entidad.
+    private String color; // Campo que representa el color de la bola.
+    private Double valorDistribucion; // Campo que representa el valor de distribución de la bola.
 }

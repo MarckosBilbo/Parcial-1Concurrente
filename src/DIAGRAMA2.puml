@@ -1,0 +1,15 @@
+@startuml
+
+actor Usuario
+
+usecase "Producir Componentes" as UC1
+usecase "Ensamblar Máquina" as UC2
+usecase "Asignar Valores de Distribución" as UC3
+usecase "Visualizar Proceso" as UC4
+
+Usuario --> UC1
+Usuario --> UC2
+Usuario --> UC3
+Usuario --> UC4
+
+@enduml
