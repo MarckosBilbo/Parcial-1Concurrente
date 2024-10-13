@@ -8,7 +8,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-import java.net.URI;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 @SpringBootApplication
@@ -33,21 +33,25 @@ public class Parcial1ConcurrenteApplication {
 			produccionService.ensamblarMaquina();
 			produccionService.asignarValoresDistribucion();
 
-			// Forzamos la apertura del navegador pues la descktop suppot no me deja
+			// Forzamos la apertura del navegador
 			String url = "http://localhost:8080";
-			if (System.getProperty("os.name").toLowerCase().contains("win")) {
-				Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
-			} else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-				Runtime.getRuntime().exec("open " + url);
-			} else if (System.getProperty("os.name").toLowerCase().contains("nix") ||
-					System.getProperty("os.name").toLowerCase().contains("nux")) {
-				Runtime.getRuntime().exec("xdg-open " + url);
-			} else {
-				logger.warning("Unsupported operating system");
-			}
+			openBrowser(url);
 		} catch (Exception e) {
 			logger.severe("Failed to open browser: " + e.getMessage());
 			e.printStackTrace();
+		}
+	}
+
+	private void openBrowser(String url) throws IOException {
+		if (System.getProperty("os.name").toLowerCase().contains("win")) {
+			Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + url);
+		} else if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+			Runtime.getRuntime().exec("open " + url);
+		} else if (System.getProperty("os.name").toLowerCase().contains("nix") ||
+				System.getProperty("os.name").toLowerCase().contains("nux")) {
+			Runtime.getRuntime().exec("xdg-open " + url);
+		} else {
+			logger.warning("Unsupported operating system");
 		}
 	}
 }

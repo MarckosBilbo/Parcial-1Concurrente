@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/main.3282904e.css","mappings":"AAAA,KACE,4BACF,CAEA,IACE,qBACF","sources":["App.css"],"sourcesContent":["body {\r\n  font-family: Arial, sans-serif;\r\n}\r\n\r\nsvg {\r\n  border: 1px solid #ccc;\r\n}\r\n"],"names":[],"sourceRoot":""}
