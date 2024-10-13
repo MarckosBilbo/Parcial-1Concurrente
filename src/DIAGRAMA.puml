@@ -1,0 +1,88 @@
+@startuml
+
+package org.example.parcial1concurrente.domain {
+    class Bola {
+        Long id
+        String color
+        Double valorDistribucion
+    }
+
+    class Componente {
+        Long id
+        String tipo
+        String nombre
+    }
+}
+
+package org.example.parcial1concurrente.repos {
+    interface BolaRepository {
+        +save(Bola): Bola
+        +findById(Long): Optional<Bola>
+        +findAll(): List<Bola>
+        +deleteById(Long): void
+    }
+
+    interface ComponenteRepository {
+        +save(Componente): Componente
+        +findById(Long): Optional<Componente>
+        +findAll(): List<Componente>
+        +deleteById(Long): void
+        +findByTipo(String): List<Componente>
+    }
+}
+
+package org.example.parcial1concurrente.rest {
+    class ComponenteController {
+        -ComponenteRepository componenteRepository
+        -BolaRepository bolaRepository
+        +getClavos(): List<Componente>
+        +getContenedores(): List<Componente>
+        +getBolas(): List<Bola>
+    }
+
+    class ProduccionController {
+        -ProduccionService produccionService
+        +producir(): String
+        +ensamblar(): String
+        +asignarValores(): String
+    }
+
+    class VisualizacionController {
+        -ProduccionService produccionService
+        +stream(): SseEmitter
+    }
+}
+
+package org.example.parcial1concurrente.service {
+    class ProduccionService {
+        -ComponenteRepository componenteRepository
+        -BolaRepository bolaRepository
+        -BlockingQueue<Componente> bufferComponentes
+        -BlockingQueue<Bola> bufferBolas
+        +producirComponentes(): void
+        +ensamblarMaquina(): void
+        +asignarValoresDistribucion(): void
+        +leerValoresDistribucion(): List<Double>
+        +consumirBola(): Bola
+    }
+}
+
+package org.example.parcial1concurrente {
+    class Parcial1ConcurrenteApplication {
+        -ProduccionService produccionService
+        +main(String[]): void
+        +contextRefreshedEvent(): void
+    }
+}
+
+BolaRepository --> Bola
+ComponenteRepository --> Componente
+ComponenteController --> ComponenteRepository
+ComponenteController --> BolaRepository
+ProduccionController --> ProduccionService
+VisualizacionController --> ProduccionService
+ProduccionService --> ComponenteRepository
+ProduccionService --> BolaRepository
+Parcial1ConcurrenteApplication --> ProduccionService
+
+@enduml
