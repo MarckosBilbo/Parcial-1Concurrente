@@ -3,31 +3,41 @@ package org.example.parcial1concurrente.rest;
 import org.example.parcial1concurrente.service.ProduccionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-// Controlador REST para manejar las solicitudes relacionadas con la producción y ensamblaje de componentes.
+import java.io.IOException;
+
 @RestController
+@RequestMapping("/api/produccion")
 public class ProduccionController {
+    // Inyección de dependencias del servicio de producción
     private final ProduccionService produccionService;
 
-    // Constructor que inyecta el servicio de producción.
+    // Constructor con inyección de dependencias
     @Autowired
     public ProduccionController(ProduccionService produccionService) {
         this.produccionService = produccionService;
     }
 
-    // Endpoint para producir un nuevo componente de manera asíncrona.
-    @GetMapping("/producir/{nombre}")
-    public String producir(@PathVariable String nombre) {
-        produccionService.producirComponenteAsync(nombre);
-        return "Componente " + nombre + " producido.";
+    // Endpoint para iniciar la producción de componentes
+    @GetMapping("/producir")
+    public String producir() {
+        produccionService.producirComponentes();
+        return "Producción iniciada.";
     }
 
-    // Endpoint para ensamblar un componente de manera asíncrona.
+    // Endpoint para iniciar el ensamblaje de la máquina
     @GetMapping("/ensamblar")
     public String ensamblar() throws InterruptedException {
-        produccionService.ensamblarComponenteAsync();
-        return "Ensamblando componente.";
+        produccionService.ensamblarMaquina();
+        return "Ensamblaje iniciado.";
+    }
+
+    // Endpoint para asignar valores de distribución
+    @GetMapping("/asignar-valores")
+    public String asignarValores() throws IOException, InterruptedException {
+        produccionService.asignarValoresDistribucion();
+        return "Asignación de valores de distribución iniciada.";
     }
 }

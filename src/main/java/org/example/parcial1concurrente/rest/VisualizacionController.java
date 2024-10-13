@@ -1,39 +1,45 @@
 package org.example.parcial1concurrente.rest;
 
-import org.example.parcial1concurrente.domain.Componente;
+import org.example.parcial1concurrente.domain.Bola;
 import org.example.parcial1concurrente.service.ProduccionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-// Controlador REST para manejar la visualización de componentes en tiempo real.
 @RestController
+@RequestMapping("/api/visualizacion")
 public class VisualizacionController {
+    // Inyección de dependencias del servicio de producción
     private final ProduccionService produccionService;
 
-    // Constructor que inyecta el servicio de producción.
+    // Constructor con inyección de dependencias
     @Autowired
     public VisualizacionController(ProduccionService produccionService) {
         this.produccionService = produccionService;
     }
 
-    // Endpoint para iniciar un stream de Server-Sent Events (SSE) que envía nombres de componentes en tiempo real.
+    // Endpoint para iniciar el streaming de valores de distribución de bolas
     @GetMapping("/stream")
     public SseEmitter stream() {
+        // Crear un nuevo SseEmitter para enviar eventos del lado del servidor
         SseEmitter emitter = new SseEmitter();
+        // Iniciar un nuevo hilo para consumir bolas y enviar sus valores de distribución
         new Thread(() -> {
             try {
                 while (true) {
-                    // Consume un componente del buffer y envía su nombre a través del SSE.
-                    Componente componente = produccionService.consumirComponente();
-                    emitter.send(componente.getNombre());
+                    // Consumir una bola del buffer
+                    Bola bola = produccionService.consumirBola();
+                    // Enviar el valor de distribución de la bola a través del SseEmitter
+                    emitter.send(bola.getValorDistribucion());
                 }
             } catch (Exception e) {
-                // Completa el SSE con un error si ocurre una excepción.
+                // Completar el SseEmitter con un error en caso de excepción
                 emitter.completeWithError(e);
             }
         }).start();
+        // Devolver el SseEmitter para iniciar el streaming
         return emitter;
     }
 }
