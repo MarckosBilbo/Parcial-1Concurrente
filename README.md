@@ -1,5 +1,7 @@
 # Parcial-1Concurrente (Roberto.Quilez y Marcos.García)
 
+LINK al repositorio: https://github.com/MarckosBilbo/Parcial-1Concurrente.git
+
 Este proyecto es una aplicación desarrollada en Java utilizando Spring Boot, con una base de datos MySQL y una interfaz de usuario en React. A continuación, se describe brevemente el funcionamiento del programa y las referencias que componen el directorio `src` (Backend).
 
 ## Descripción General
