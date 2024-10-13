@@ -40,7 +40,8 @@ public class ProduccionService {
             bola.setNombre("Bola " + i);
             componenteRepository.save(bola);
             bufferComponentes.add(bola);
-            System.out.println("Bola " + i + " producida.");
+            System.out.println("========================================================================================\n");
+            System.out.println(" *** Bola [" + i + "] producida ***");
         }
 
         // Producir 15 clavos
@@ -50,7 +51,8 @@ public class ProduccionService {
             clavo.setNombre("Clavo " + i);
             componenteRepository.save(clavo);
             bufferComponentes.add(clavo);
-            System.out.println("Clavo " + i + " producido.");
+            System.out.println("========================================================================================\n");
+            System.out.println(" *** Clavo [" + i + "] producido ***");
         }
 
         // Producir 6 contenedores
@@ -60,7 +62,8 @@ public class ProduccionService {
             contenedor.setNombre("Contenedor " + i);
             componenteRepository.save(contenedor);
             bufferComponentes.add(contenedor);
-            System.out.println("Contenedor " + i + " producido.");
+            System.out.println("========================================================================================\n");
+            System.out.println("*** Contenedor [" + i + "] producido ***");
         }
     }
 
@@ -70,7 +73,9 @@ public class ProduccionService {
         while (true) {
             // Tomar un componente del buffer y ensamblarlo
             Componente componente = bufferComponentes.take();
-            System.out.println("Ensamblando " + componente.getNombre());
+            System.out.println("~~ Ensamblando [" + componente.getNombre() +"] ~~");
+            System.out.println("========================================================================================\n");
+
             // Lógica de ensamblaje
         }
     }
@@ -85,8 +90,8 @@ public class ProduccionService {
             bola.setValorDistribucion(valoresDistribucion.get(i));
             bolaRepository.save(bola);
             bufferBolas.add(bola);
-            System.out.println("Bola " + i + " con valor de distribución " + valoresDistribucion.get(i) + " asignado.");
-            System.out.println("Guardado en la base de datos: " + bola);
+            System.out.println("% % Bola [" + i + "] con valor de distribución [" + valoresDistribucion.get(i) + "] asignado. % %");
+            System.out.println("&& Guardado en la base de datos: [" + bola + "] &&");
         }
     }
 
@@ -99,7 +104,8 @@ public class ProduccionService {
             br.readLine(); // Saltar la primera línea (cabecera)
             while ((line = br.readLine()) != null) {
                 valores.add(Double.parseDouble(line));
-                System.out.println("Valor leído: " + line);
+                System.out.println("------------------------------------------");
+                System.out.println("Valor leído: [" + line + "]");
             }
         }
         return valores;
