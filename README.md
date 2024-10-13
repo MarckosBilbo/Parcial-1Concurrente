@@ -77,6 +77,3 @@ La aplicación estará disponible en `http://localhost:8080`.
 - **GET** `/api/produccion/asignar-valores`: Asigna valores de distribución a las bolas.
 - **GET** `/api/visualizacion/stream`: Inicia el streaming de valores de distribución de las bolas.
 
-## Contribuciones
-
-Las contribuciones son bienvenidas. Por favor, abre un issue o un pull request para discutir cualquier cambio que desees realizar.
